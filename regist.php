@@ -36,17 +36,17 @@ $query->bindParam(':id', $id);
 $query->execute();
 $result = $query->fetch();
 
-if(pg_num_rows($result)){
+if($result){
     exit("既に登録されています");
 }else{
     $insert_sql = 
         "INSERT INTO users (name, password, created_at, updated_at) 
-        VALUES (':id', ':hash_pw', ':timestamp', ':timestamp');";
+        VALUES (:id, :hash_pw, :timestamp, :timestamp);";
     $query = $pdo->prepare($insert_sql);
 
     $query->bindParam(':id', $id);
     $query->bindParam(':hash_pw', password_hash($pw, PASSWORD_DEFAULT));
-    $query->bindParam('timestamp', date('Y-m-d H:i:s', time()));
+    $query->bindParam(':timestamp', date('Y-m-d H:i:s', time()));
     
     $query->execute();
 
