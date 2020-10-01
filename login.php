@@ -28,7 +28,7 @@ try {
     echo $e->getMessage();
 }
 
-$confirm_sql = "SELECT password FROM users WHERE :post_id == name;";
+$confirm_sql = "SELECT password FROM users WHERE :post_id = name;";
 $query = $pdo->prepare($confirm_sql);
 $query->bindParam(':post_id', $post_id);
 $query->execute();
