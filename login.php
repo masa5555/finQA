@@ -32,19 +32,20 @@ $confirm_sql = "SELECT password FROM users WHERE :post_id = name;";
 $query = $pdo->prepare($confirm_sql);
 $query->bindParam(':post_id', $post_id);
 $query->execute();
-$db_pw = $query->fetch();
-
-echo $db_pw;
+$db_pw = $query->fetch(PDO::FETCH_COLUMN);
 
 if(password_verify($post_pw, $db_pw)){
-    //TODO:フラッシュメッセージ：ログインに成功しました
     
     // sessionを使う（脆弱性）
-    setcookie("post_id", $post_id, time()+60*60);
+    setcookie("id", $post_id, time()+60);
+    setcookie("success_login", 1, time()+5);
+    
     header("Location: $dest");
     exit;
 }else{
     exit("post_idまたはパスワードが違います");
 }
+
+unset($pdo);
 
 ?>
