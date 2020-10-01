@@ -34,6 +34,8 @@ $query->bindParam(':post_id', $post_id);
 $query->execute();
 $db_pw = $query->fetch();
 
+echo $db_pw;
+
 if(password_verify($post_pw, $db_pw)){
     //TODO:フラッシュメッセージ：ログインに成功しました
     
