@@ -29,8 +29,7 @@ try {
     echo $e->getMessage();
 }
 
-//　同じ名前を入力したときもDB登録されてしまう。fetchがうまく行ってない
-$confirm_sql = "SELECT name FROM users WHERE :id == name;";
+$confirm_sql = "SELECT name FROM users WHERE :id = name;";
 $query = $pdo->prepare($confirm_sql);
 $query->bindParam(':id', $id);
 $query->execute();
@@ -46,7 +45,7 @@ if($result){
 
     $hash_pw = password_hash($pw, PASSWORD_DEFAULT);
     $timestamp = date('Y-m-d H:i:s', time());
-    
+
     $query->bindParam(':id', $id);
     $query->bindParam(':hash_pw', $hash_pw);
     $query->bindParam(':timestamp', $timestamp);
